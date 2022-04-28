@@ -1,0 +1,14 @@
+.captureWrapper{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.captureContainer{
+    text-align: center;
+}
+
+.captureContainer img{
+    width: 100%;
+    height: auto;
+}

@@ -1,0 +1,29 @@
+{
+    "name": "quansitech/qscmf-buttontype-download-img",
+    "description": "qscmf modal button download",
+    "keywords": ["qscmf", "component", "modal", "button", "download"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xhiny",
+            "email": "axhiny@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "quansitech/qscmf-buttontype-modal": ">=1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Qs\\ListRightButton\\": "src/"
+        }
+    },
+    "extra": {
+        "qscmf": {
+            "providers": [
+                "Qs\\ListRightButton\\DownloadImgButtonProvider"
+            ]
+        }
+    }
+}
