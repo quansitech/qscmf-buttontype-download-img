@@ -8,21 +8,21 @@ class DownloadImgButtonBuilder
 {
     protected ModalButtonBuilder $modal_builder;
     protected $html;
-    protected $title;
+    protected $modal_title;
     protected $file_name;
 
     protected $img_name;
     protected $img_full_url;
-    protected $img_name_attribute = 'style="font-weight: bold;font-size: 40px;"';
+    protected $img_name_style;
     protected $img_scale = 3.125;
 
-    public function __construct($title, $img_full_url = '',$file_name = '')
+    public function __construct($modal_title,$img_full_url,$file_name)
     {
-        $this->setTitle($title);
+        $this->setModalTitle($modal_title);
         $img_full_url && $this->setImgFullUrl($img_full_url);
         $file_name && $this->setFileName($file_name);
         $this->modal_builder = new ModalButtonBuilder();
-        $this->setDialogWidth('auto');
+        $this->setModalDialogWidth('auto');
         $this->modal_builder->setDialogHeight('auto');
     }
 
@@ -34,13 +34,13 @@ class DownloadImgButtonBuilder
         return $this->modal_builder->getModalDom();
     }
 
-    public function setTitle($title):self{
-        $this->title = $title;
+    public function setModalTitle($modal_title):self{
+        $this->modal_title = $modal_title;
         return $this;
     }
 
-    public function getTitle():string{
-        return $this->title;
+    public function getModalTitle():string{
+        return $this->modal_title;
     }
 
     public function setFileName($file_name):self{
@@ -52,8 +52,9 @@ class DownloadImgButtonBuilder
         return $this->file_name;
     }
 
-    public function setImgName($img_name):self{
+    public function setImgName($img_name, $style = 'font-weight: bold;font-size: 40px;'):self{
         $this->img_name = $img_name;
+        $this->img_name_style = $style;
         return $this;
     }
 
@@ -62,12 +63,7 @@ class DownloadImgButtonBuilder
         return $this;
     }
 
-    public function setImgNameAttribute($img_name_attribute):self{
-        $this->img_name_attribute = $img_name_attribute;
-        return $this;
-    }
-
-    public function setDialogWidth($width):self{
+    public function setModalDialogWidth($width):self{
         $this->modal_builder->setDialogWidth($width);
         return $this;
     }
@@ -84,7 +80,7 @@ class DownloadImgButtonBuilder
             $view->assign('img_full_url', $this->img_full_url);
             $view->assign('file_name', $this->file_name);
             $view->assign('img_name', $this->img_name);
-            $view->assign('img_name_attribute', $this->img_name_attribute);
+            $view->assign('img_name_style', $this->img_name_style);
             $view->assign('img_scale', $this->img_scale);
 
             $this->html = $view->fetch(__DIR__ . '/download_img.html');
@@ -96,7 +92,7 @@ class DownloadImgButtonBuilder
     }
 
     protected function buildModal(){
-        $this->modal_builder->setTitle($this->title);
+        $this->modal_builder->setTitle($this->modal_title);
         $this->modal_builder->setBody($this->html);
         $this->modal_builder->setAjaxSubmit(false);
         $this->modal_builder->showDefBtn(false);

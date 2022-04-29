@@ -23,10 +23,9 @@ composer require quansitech/qscmf-buttontype-download-img
     protected function genDownloadImage($ent){
         $img_full_url = showFileUrl($ent['cover']);
         $img_full_url = $img_full_url ? HTTP_PROTOCOL."://".SITE_URL.$img_full_url: "";
-        $builder = new DownloadImgButtonBuilder("下载小程序码", $img_full_url, $ent['name']." 主页码");
-        $builder->setImgName($ent['name']);
-        $builder->setDialogWidth("450");
-        $builder->setImgNameAttribute('style="font-weight: bold;font-size: 20px;"');
+        $builder = new DownloadImgButtonBuilder("下载小程序码", $img_full_url, "全思-亲子阅读分享码");
+        $builder->setImgName("全思-亲子阅读", "font-weight: bold;font-size: 20px;");
+        $builder->setModalDialogWidth("450");
 
         return $builder;
     }
