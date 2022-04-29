@@ -6,7 +6,7 @@
 #### 实例化类
 ```php
 // 参数说明
-// string $title 模态框标题
+// string $modal_title 模态框标题
 // string $img_full_url 图片路径
 // string $file_name 文件名
 
@@ -60,7 +60,7 @@ new DownloadImgButtonBuilder("下载小程序码", "https://site_url/img_url.jpg
 ```
 ```php
 // 参数说明
-// string|integer $img_scale 下载图片比例
+// string $img_scale 下载图片比例
 ->setImgScale("3.125")
 ```
 
