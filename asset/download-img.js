@@ -32,7 +32,6 @@ function loadAndShow(imgUrl, imgDom, modalDom) {
     let canvas = document.createElement('canvas'),
         ctx = canvas.getContext('2d');
     img = new Image();
-    img.src = imgUrl;
     img.crossOrigin = 'Anonymous';
     img.onload = function(){
         canvas.height = img.height;
@@ -42,6 +41,7 @@ function loadAndShow(imgUrl, imgDom, modalDom) {
         canvas = null;
         modalDom.modal('show');
     }
+    img.src = imgUrl;
 }
 
 function downloadFile(content, fileName) { //下载base64图片
