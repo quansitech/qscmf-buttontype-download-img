@@ -62,6 +62,55 @@ composer require quansitech/qscmf-buttontype-download-img
     }
   }
   ```
+
++ 使用接口返回图片地址等信息，实例化*DownloadImgButtonBuilder*类的img_full_url为api地址。
+  ```php
+    protected function genDownloadImage($ent){
+        $builder = new DownloadImgButtonBuilder("下载小程序码", U("fetchDownloadImageInfo",['id' => $ent['id']]), "全思-亲子阅读分享码");
+        $builder->setImgName("全思-亲子阅读", "font-weight: bold;font-size: 20px;");
+        $builder->setModalDialogWidth("450");
+        $builder->setUseApi(true);
+
+        return $builder;
+    }
+  
+    public function fetchDownloadImageInfo($id){
+        $ent = D("TestModal")->getOne($id);
+        $img_full_url = showFileUrl($ent['cover']);
+        $img_full_url = $img_full_url ? HTTP_PROTOCOL."://".SITE_URL.$img_full_url: "";
+  
+        // 返回值说明
+        // img_full_url 设置图片路径，为绝对地址，该字段不能为空
+        // 其它字段按需赋值，为空则以实例化类时设置的值为准，否则替换对应字段的值
+        // file_name 设置文件名
+        // img_name 设置图片描述文字
+        // img_name_style 设置图片描述文字样式
+        // img_scale 设置下载图片比例
+  
+        $this->ajaxReturn(['status' => 1, 'data' => [
+            'img_full_url' => $img_full_url,
+            'file_name' => '全思-亲子阅读分享码',
+            'img_name' => '全思-亲子阅读',
+            'img_name_style' => "font-weight: bold;font-size: 30px;",
+            'img_scale' => 4,
+        ]]);
+    }
+  
+    public function edit($id){
+    if (IS_POST) {
+        // 业务逻辑
+    }
+    else {
+        $info = D('User')->getOne($id);
+        $info['download_img'] = $this->genDownloadImage($info)
+        
+         // 表单数据需要定义'download_img'的值，且该值为DownloadImgButtonBuilder对象 
+         (new \Qscmf\Builder\FormBuilder())
+        ->addButton('download_img',['title' => '下载小程序码'], '', '', 'download_img')
+        ->setFormData($info)
+    }
+  }
+  ```
   
 
 #### 效果图

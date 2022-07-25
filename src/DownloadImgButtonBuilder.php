@@ -15,6 +15,7 @@ class DownloadImgButtonBuilder
     protected $img_full_url;
     protected $img_name_style;
     protected $img_scale = 3.125;
+    protected $use_api = false;
 
     public function __construct($modal_title,$img_full_url,$file_name)
     {
@@ -72,6 +73,15 @@ class DownloadImgButtonBuilder
         return $this;
     }
 
+    public function setUseApi($use_api):self{
+        $this->use_api = $use_api;
+        return $this;
+    }
+
+    protected function getApiUrl():string{
+        return $this->use_api ? $this->img_full_url : '';
+    }
+
     public function __toString(){
         if (!$this->html){
             $view = new \Think\View();
@@ -82,6 +92,7 @@ class DownloadImgButtonBuilder
             $view->assign('img_name', $this->img_name);
             $view->assign('img_name_style', $this->img_name_style);
             $view->assign('img_scale', $this->img_scale);
+            $view->assign('api_url', $this->getApiUrl());
 
             $this->html = $view->fetch(__DIR__ . '/download_img.html');
         }

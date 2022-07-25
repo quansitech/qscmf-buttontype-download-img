@@ -1,7 +1,7 @@
     <div class="captureWrapper">
         <div class="captureContainer" id="{$modal_dom}Capture">
             <img src="" id="{$modal_dom}Img">
-            <notempty name="img_name"><p style="{$img_name_style}" >{$img_name}</p></notempty>
+            <p id="{$modal_dom}ImgName" style="{$img_name_style}" >{$img_name}</p>
         </div>
     </div>
     <div class="show-canvas hide">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{:asset('download-img/download-img.css')}" />
 
     <script type="text/javascript" src="{:asset('download-img/html2canvas/html2canvas.js')}"></script>
-    <script type="text/javascript" src="{:asset('download-img/download-img.js')}"></script>
+    <script type="text/javascript" src="{:asset('download-img/download-img.js?v=0.1')}"></script>
     <define name="qs-button-type-download-img" value="1" />
 </notdefined>
 
@@ -21,23 +21,50 @@
         const modalDom = $("#{$modal_dom}");
         const imgDom = $('#{$modal_dom}Img');
         const downloadBtnDom = modalDom.find('.downloadCode');
+        const imgNameDom = $("#{$modal_dom}ImgName");
 
         let imgOpt = {};
         imgOpt.url = "{$img_full_url}";
         imgOpt.fileName = "{$file_name}";
         imgOpt.scale = "{$img_scale}";
 
-        $("#{$gid}").on('click',function () {
-            if (imgOpt.url){
-                downloadBtnDom.data('file-name', imgOpt.fileName);
-                loadAndShow(imgOpt.url, imgDom, modalDom);
+        let apiUrl = "{$api_url}";
 
+        $("#{$gid}").on('click',function () {
+            if (apiUrl){
+                getPromise(apiUrl).then(res =>{
+                    if (parseInt(res.status) === 1){
+                        if (res.data.img_full_url){
+                            let newImgOpt = {};
+                            newImgOpt.url = res.data.img_full_url;
+                            newImgOpt.fileName = res.data?.file_name;
+                            newImgOpt.scale = res.data?.img_scale;
+                            imgOpt = $.extend({},imgOpt, newImgOpt);
+
+                            let imgNameOpt = {
+                                style: res.data?.img_name_style||"{$img_name_style}",
+                                name:res.data?.img_name||"{$img_name}"
+                            };
+
+                            injectImgName(imgNameOpt, imgNameDom);
+                            injectDownHtml(imgOpt, downloadBtnDom);
+                            loadAndShow(imgOpt.url, imgDom, modalDom);
+                        }else{
+                            alert('暂无资源可下载');
+                        }
+                    }
+                }).catch(res =>{
+                    alert(res.info || '错误，请联系管理员');
+                });
+            }else if (imgOpt.url){
+                injectDownHtml(imgOpt, downloadBtnDom);
+                loadAndShow(imgOpt.url, imgDom, modalDom);
             }else{
                 alert('暂无资源可下载');
             }
         });
 
-        downloadCanvas(downloadBtnDom, "{$modal_dom}Capture", "{$modal_dom}Poster", imgOpt.scale);
+        downloadCanvas(downloadBtnDom, "{$modal_dom}Capture", "{$modal_dom}Poster");
     });
 
 </script>

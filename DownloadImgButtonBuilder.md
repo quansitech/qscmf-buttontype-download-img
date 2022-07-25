@@ -73,3 +73,13 @@ new DownloadImgButtonBuilder("下载小程序码", "https://site_url/img_url.jpg
 // string $width 宽度
 ->setModalDialogWidth("250")
 ```
+
+#### setUseApi
+```text
+设置是否使用api获取图片地址等信息，为true时，实例化此类的img_full_url为api地址。
+```
+```php
+// 参数说明
+// bool $use_api 是否使用api获取图片地址等信息，true 是 false 否，默认为否
+->setUseApi($use_api)
+```

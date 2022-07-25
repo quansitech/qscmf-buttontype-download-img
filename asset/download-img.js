@@ -1,4 +1,4 @@
-function downloadCanvas(downloadBtnDom, captureId, posterId, scale = 3.125){
+function downloadCanvas(downloadBtnDom, captureId, posterId){
     downloadBtnDom.on('click', function () {
         const captureDom = $('#'+captureId);
         const posterDom = $('#'+posterId);
@@ -6,6 +6,7 @@ function downloadCanvas(downloadBtnDom, captureId, posterId, scale = 3.125){
         let $this = $(this);
         let btn_text = $this.text();
         let fileName = $(this).data('file-name');
+        let scale = $(this).data('scale') || 3.125;
 
         $this.text('下载中').attr('disabled',true);
         let w = captureDom.outerWidth();
@@ -65,4 +66,31 @@ function downloadFile(content, fileName) { //下载base64图片
     aLink.download = fileName;
     aLink.href = URL.createObjectURL(blob);
     aLink.click();
+}
+
+function getPromise(apiUrl){
+    return new Promise((resolve, reject) =>{
+        $.get(apiUrl, function (res) {
+            if (res.status === 1) {
+                resolve(res);
+            }
+            if (res.status === 0){
+                reject(res);
+            }
+        });
+    });
+}
+
+function injectImgName(opt,dom){
+    if (opt.name){
+        dom.attr('style', opt.style);
+        dom.text(opt.name);
+    }else{
+        dom.attr('style','display:none');
+    }
+}
+
+function injectDownHtml(opt,dom){
+    dom.data('scale', opt.scale);
+    dom.data('file-name', opt.fileName);
 }
