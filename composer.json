@@ -16,13 +16,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Qs\\ListRightButton\\": "src/"
+            "Qs\\DownloadImg\\": "src/"
         }
     },
     "extra": {
         "qscmf": {
             "providers": [
-                "Qs\\ListRightButton\\DownloadImgButtonProvider"
+                "Qs\\DownloadImg\\DownloadImgButtonProvider"
             ]
         }
     }

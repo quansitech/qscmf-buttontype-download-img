@@ -1,14 +1,12 @@
 <?php
 
-namespace Qs\ListRightButton\DownloadImg;
+namespace Qs\DownloadImg\ListRightButton;
 
-use Qs\ListRightButton\DownloadImgButtonBuilder;
+use Qs\DownloadImg\DownloadImgButtonBuilder;
 use Qscmf\Builder\ListRightButton\ListRightButton;
 
-class DownloadImg extends ListRightButton
+class RightButtonDownloadImg extends ListRightButton
 {
-    protected $title = '下载图片';
-
     public function build(array &$option, array $data, $listBuilder)
     {
         $my_attribute['type'] = 'download_img';

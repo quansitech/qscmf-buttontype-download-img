@@ -1,6 +1,6 @@
 <?php
 
-namespace Qs\ListRightButton;
+namespace Qs\DownloadImg;
 
 use Qs\ModalButton\ModalButtonBuilder;
 
