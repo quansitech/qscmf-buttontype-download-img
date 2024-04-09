@@ -68,6 +68,16 @@ class DownloadImgButtonBuilder
         $this->modal_builder->setDialogWidth($width);
         return $this;
     }
+
+    public function setModalDialogHeight($height):self{
+        $this->modal_builder->setBodyHeight($height);
+        return $this;
+    }
+
+    public function getModalBuilder() : ModalButtonBuilder{
+        return $this->modal_builder;
+    }
+
     public function setImgScale($img_scale):self{
         $this->img_scale = $img_scale;
         return $this;
