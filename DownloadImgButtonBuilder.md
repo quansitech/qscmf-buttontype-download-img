@@ -83,3 +83,21 @@ new DownloadImgButtonBuilder("下载小程序码", "https://site_url/img_url.jpg
 // bool $use_api 是否使用api获取图片地址等信息，true 是 false 否，默认为否
 ->setUseApi($use_api)
 ```
+
+#### setModalDialogHeight
+```text
+设置模态框的高度
+```
+```php
+// 参数说明
+// string $width 宽度
+->setModalDialogHeight("450")
+```
+
+#### getModalBuilder
+```text
+获取模态框builder对象，以便对其客制化设置
+```
+```php
+->getModalBuilder()
+```
